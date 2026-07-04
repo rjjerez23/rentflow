@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DriveFlow">
+  <rect width="64" height="64" rx="16" fill="#2563EB"/>
+  <path d="M15 37h34l-4-12a7 7 0 0 0-7-5H26a7 7 0 0 0-7 5l-4 12Z" fill="#FFFFFF"/>
+  <path d="M18 37h28v6H18z" fill="#DBEAFE"/>
+  <circle cx="23" cy="44" r="5" fill="#0F172A"/>
+  <circle cx="41" cy="44" r="5" fill="#0F172A"/>
+</svg>
