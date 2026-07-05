@@ -6,7 +6,7 @@ const getAllVehicles = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Vehicles retrieved successfully',
+      message: 'Vehículos obtenidos correctamente',
       data: vehicles,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getVehicleById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Vehicle retrieved successfully',
+      message: 'Vehículo obtenido correctamente',
       data: vehicle,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createVehicle = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Vehicle created successfully',
+      message: 'Vehículo creado correctamente',
       data: vehicle,
     });
   } catch (error) {
@@ -48,7 +48,7 @@ const updateVehicle = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Vehicle updated successfully',
+      message: 'Vehículo actualizado correctamente',
       data: vehicle,
     });
   } catch (error) {
@@ -62,7 +62,7 @@ const deleteVehicle = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Vehicle deactivated successfully',
+      message: 'Vehículo desactivado correctamente',
       data: vehicle,
     });
   } catch (error) {

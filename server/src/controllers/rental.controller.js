@@ -6,7 +6,7 @@ const getAllRentals = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Rentals retrieved successfully',
+      message: 'Alquileres obtenidos correctamente',
       data: rentals,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getRentalById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Rental retrieved successfully',
+      message: 'Alquiler obtenido correctamente',
       data: rental,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createRental = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Rental created successfully',
+      message: 'Alquiler creado correctamente',
       data: rental,
     });
   } catch (error) {
@@ -48,7 +48,7 @@ const updateRental = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Rental updated successfully',
+      message: 'Alquiler actualizado correctamente',
       data: rental,
     });
   } catch (error) {
@@ -62,7 +62,7 @@ const deleteRental = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Rental cancelled successfully',
+      message: 'Alquiler cancelado correctamente',
       data: rental,
     });
   } catch (error) {

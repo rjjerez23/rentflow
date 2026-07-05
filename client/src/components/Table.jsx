@@ -11,8 +11,8 @@ function VehicleCell({ row }) {
         <span>{row.brand_name?.charAt(0) || 'D'}</span>
       </div>
       <div>
-        <strong>{[row.brand_name, row.model_name].filter(Boolean).join(' ') || 'Vehicle'}</strong>
-        <small>{row.plate_number || 'No plate'}</small>
+        <strong>{[row.brand_name, row.model_name].filter(Boolean).join(' ') || 'Vehículo'}</strong>
+        <small>{row.plate_number || 'Sin placa'}</small>
       </div>
     </div>
   )
@@ -31,7 +31,7 @@ function Table({ columns, rows, idKey, onEdit, onDelete, emptyTitle }) {
             {columns.map((column) => (
               <th key={column.key}>{column.label}</th>
             ))}
-            <th className="actions-column">Actions</th>
+            <th className="actions-column">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -51,10 +51,10 @@ function Table({ columns, rows, idKey, onEdit, onDelete, emptyTitle }) {
               <td>
                 <div className="row-actions">
                   <Button variant="ghost" size="icon" icon={Edit2} onClick={() => onEdit(row)}>
-                    Edit
+                    Editar
                   </Button>
                   <Button variant="ghost-danger" size="icon" icon={Trash2} onClick={() => onDelete(row)}>
-                    Delete
+                    Eliminar
                   </Button>
                 </div>
               </td>

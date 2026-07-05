@@ -8,7 +8,7 @@ function Modal({ title, children, onClose }) {
         <header className="modal-header">
           <h2>{title}</h2>
           <Button variant="ghost" size="icon" icon={X} onClick={onClose}>
-            Close
+            Cerrar
           </Button>
         </header>
         {children}

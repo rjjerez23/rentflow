@@ -1,4 +1,4 @@
-function Loader({ label = 'Loading' }) {
+function Loader({ label = 'Cargando' }) {
   return (
     <div className="loader" role="status">
       <span aria-hidden="true" />

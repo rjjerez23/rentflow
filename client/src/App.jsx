@@ -8,6 +8,7 @@ import {
   ClipboardList,
   Gauge,
   LayoutDashboard,
+  LogOut,
   Menu,
   Plus,
   RefreshCw,
@@ -24,6 +25,7 @@ import Card from './components/Card'
 import ConfirmDialog from './components/ConfirmDialog'
 import EmptyState from './components/EmptyState'
 import Loader from './components/Loader'
+import LoginPage from './components/LoginPage'
 import Modal from './components/Modal'
 import Pagination from './components/Pagination'
 import ResourceForm from './components/ResourceForm'
@@ -35,15 +37,15 @@ import { getFieldValue, resourceConfigs, resourceOrder } from './config/resource
 import { formatCurrency, formatDateTime } from './utils/formatters'
 
 const navItems = [
-  { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { key: 'users', label: 'Users', icon: ShieldCheck },
-  { key: 'customers', label: 'Customers', icon: Users },
-  { key: 'vehicles', label: 'Vehicles', icon: Car },
-  { key: 'reservations', label: 'Reservations', icon: CalendarClock },
-  { key: 'rentals', label: 'Rentals', icon: WalletCards },
-  { key: 'returns', label: 'Returns', icon: RotateCcw },
-  { key: 'reports', label: 'Reports', icon: ClipboardList },
-  { key: 'settings', label: 'Settings', icon: Settings },
+  { key: 'dashboard', label: 'Panel', icon: LayoutDashboard },
+  { key: 'users', label: 'Usuarios', icon: ShieldCheck },
+  { key: 'customers', label: 'Clientes', icon: Users },
+  { key: 'vehicles', label: 'Vehículos', icon: Car },
+  { key: 'reservations', label: 'Reservas', icon: CalendarClock },
+  { key: 'rentals', label: 'Alquileres', icon: WalletCards },
+  { key: 'returns', label: 'Devoluciones', icon: RotateCcw },
+  { key: 'reports', label: 'Reportes', icon: ClipboardList },
+  { key: 'settings', label: 'Configuración', icon: Settings },
 ]
 
 const initialData = resourceOrder.reduce((accumulator, key) => {
@@ -103,13 +105,13 @@ function Sidebar({ activeView, collapsed, mobileOpen, onNavigate, onToggleCollap
       </nav>
       <button type="button" className="collapse-button" onClick={onToggleCollapse}>
         {collapsed ? <ChevronRight size={16} aria-hidden="true" /> : <ChevronLeft size={16} aria-hidden="true" />}
-        <span>{collapsed ? 'Expand' : 'Collapse'}</span>
+        <span>{collapsed ? 'Expandir' : 'Contraer'}</span>
       </button>
     </aside>
   )
 }
 
-function Topbar({ title, subtitle, search, onSearch, onOpenMenu, onRefresh, health }) {
+function Topbar({ title, subtitle, search, onSearch, onOpenMenu, onRefresh, onSignOut, health }) {
   return (
     <header className="topbar">
       <div className="topbar-title">
@@ -122,20 +124,23 @@ function Topbar({ title, subtitle, search, onSearch, onOpenMenu, onRefresh, heal
         </div>
       </div>
       <div className="topbar-actions">
-        <SearchInput value={search} onChange={onSearch} placeholder="Search workspace" />
+        <SearchInput value={search} onChange={onSearch} placeholder="Buscar en el espacio de trabajo" />
         <Button variant="secondary" size="icon" icon={RefreshCw} onClick={onRefresh}>
-          Refresh
+          Actualizar
         </Button>
-        <button className="icon-button" type="button" aria-label="Notifications">
+        <button className="icon-button" type="button" aria-label="Notificaciones">
           <Bell size={18} aria-hidden="true" />
         </button>
         <div className="profile-chip">
           <span>DF</span>
           <div>
             <strong>Admin</strong>
-            <small>{health?.database === 'connected' ? 'Online' : 'Offline'}</small>
+            <small>{health?.database === 'connected' ? 'En línea' : 'Sin conexión'}</small>
           </div>
         </div>
+        <Button variant="ghost" size="icon" icon={LogOut} title="Cerrar sesión" aria-label="Cerrar sesión" onClick={onSignOut}>
+          Cerrar sesión
+        </Button>
       </div>
     </header>
   )
@@ -159,28 +164,28 @@ function Dashboard({ data, loading }) {
   const activeRentals = data.rentals.filter((rental) => rental.rental_status_name?.toLowerCase() === 'active')
   const revenue = data.returns.reduce((total, item) => total + Number(item.total_charged || 0), 0)
   const fleetStatus = data.vehicles.reduce((accumulator, vehicle) => {
-    const status = vehicle.vehicle_status_name || 'Unknown'
+    const status = vehicle.vehicle_status_name || 'Desconocido'
     accumulator[status] = (accumulator[status] || 0) + 1
     return accumulator
   }, {})
 
   if (loading) {
-    return <Loader label="Loading dashboard" />
+    return <Loader label="Cargando panel" />
   }
 
   return (
     <div className="dashboard">
       <div className="metrics-grid">
-        <MetricCard label="Total Vehicles" value={data.vehicles.length} icon={Car} tone="blue" />
-        <MetricCard label="Active Rentals" value={activeRentals.length} icon={WalletCards} tone="green" />
-        <MetricCard label="Reservations" value={data.reservations.length} icon={CalendarClock} tone="amber" />
-        <MetricCard label="Revenue" value={formatCurrency(revenue)} icon={Gauge} tone="red" />
+        <MetricCard label="Vehículos totales" value={data.vehicles.length} icon={Car} tone="blue" />
+        <MetricCard label="Alquileres activos" value={activeRentals.length} icon={WalletCards} tone="green" />
+        <MetricCard label="Reservas" value={data.reservations.length} icon={CalendarClock} tone="amber" />
+        <MetricCard label="Ingresos" value={formatCurrency(revenue)} icon={Gauge} tone="red" />
       </div>
 
       <div className="dashboard-grid">
         <section className="panel">
           <header className="panel-header">
-            <h2>Recent Vehicles</h2>
+            <h2>Vehículos recientes</h2>
           </header>
           <div className="stack-list">
             {data.vehicles.slice(0, 5).map((vehicle) => (
@@ -192,16 +197,16 @@ function Dashboard({ data, loading }) {
                   <strong>{[vehicle.brand_name, vehicle.model_name].filter(Boolean).join(' ')}</strong>
                   <small>{vehicle.plate_number}</small>
                 </div>
-                <Badge>{vehicle.vehicle_status_name || 'Unknown'}</Badge>
+                <Badge>{vehicle.vehicle_status_name || 'Desconocido'}</Badge>
               </div>
             ))}
-            {!data.vehicles.length && <EmptyState title="No vehicles yet" description="Fleet records will appear here." />}
+            {!data.vehicles.length && <EmptyState title="Aún no hay vehículos" description="Los registros de la flota aparecerán aquí." />}
           </div>
         </section>
 
         <section className="panel">
           <header className="panel-header">
-            <h2>Recent Rentals</h2>
+            <h2>Alquileres recientes</h2>
           </header>
           <div className="stack-list">
             {data.rentals.slice(0, 5).map((rental) => (
@@ -210,16 +215,16 @@ function Dashboard({ data, loading }) {
                   <strong>{rental.customer_name}</strong>
                   <small>{formatDateTime(rental.start_datetime)}</small>
                 </div>
-                <Badge>{rental.rental_status_name || 'Unknown'}</Badge>
+                <Badge>{rental.rental_status_name || 'Desconocido'}</Badge>
               </div>
             ))}
-            {!data.rentals.length && <EmptyState title="No rentals yet" description="Rental contracts will appear here." />}
+            {!data.rentals.length && <EmptyState title="Aún no hay alquileres" description="Los contratos de alquiler aparecerán aquí." />}
           </div>
         </section>
 
         <section className="panel fleet-panel">
           <header className="panel-header">
-            <h2>Fleet Status</h2>
+            <h2>Estado de la flota</h2>
           </header>
           <div className="status-grid">
             {Object.entries(fleetStatus).map(([status, count]) => (
@@ -228,7 +233,7 @@ function Dashboard({ data, loading }) {
                 <strong>{count}</strong>
               </div>
             ))}
-            {!Object.keys(fleetStatus).length && <EmptyState title="No fleet status" description="Vehicle status data will appear here." />}
+            {!Object.keys(fleetStatus).length && <EmptyState title="Sin estado de flota" description="Los datos de estado de vehículos aparecerán aquí." />}
           </div>
         </section>
       </div>
@@ -265,7 +270,7 @@ function ResourceView({
   const visibleRows = filteredRecords.slice((safePage - 1) * pageSize, safePage * pageSize)
 
   if (loading) {
-    return <Loader label={`Loading ${config.title.toLowerCase()}`} />
+    return <Loader label={`Cargando ${config.title.toLowerCase()}`} />
   }
 
   return (
@@ -280,7 +285,7 @@ function ResourceView({
         columns={config.columns}
         rows={visibleRows}
         idKey={config.idKey}
-        emptyTitle={`No ${config.title.toLowerCase()} found`}
+        emptyTitle={`No se encontraron ${config.title.toLowerCase()}`}
         onEdit={onEdit}
         onDelete={onDelete}
       />
@@ -292,12 +297,15 @@ function ResourceView({
 function PlaceholderView({ title }) {
   return (
     <section className="placeholder-view">
-      <EmptyState title={title} description="This area is reserved for the next DriveFlow milestone." />
+      <EmptyState title={title} description="Esta área está reservada para el próximo hito de DriveFlow." />
     </section>
   )
 }
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('driveflow-authenticated') !== 'false')
+  const [loginValues, setLoginValues] = useState({ username: '', password: '' })
+  const [loginErrors, setLoginErrors] = useState({})
   const [activeView, setActiveView] = useState('dashboard')
   const [data, setData] = useState(initialData)
   const [health, setHealth] = useState(null)
@@ -336,7 +344,7 @@ function App() {
     } catch (error) {
       setToast({
         type: 'danger',
-        title: 'Connection error',
+        title: 'Error de conexión',
         message: error.message,
       })
     } finally {
@@ -345,12 +353,52 @@ function App() {
   }
 
   useEffect(() => {
-    loadData()
-  }, [])
+    if (isAuthenticated) {
+      loadData()
+    } else {
+      setLoading(false)
+    }
+  }, [isAuthenticated])
+
+  const handleLoginChange = (name, value) => {
+    setLoginValues((current) => ({ ...current, [name]: value }))
+    setLoginErrors((current) => ({ ...current, [name]: undefined, form: undefined }))
+  }
+
+  const handleLoginSubmit = (event) => {
+    event.preventDefault()
+
+    const nextErrors = {}
+    if (!loginValues.username.trim()) {
+      nextErrors.username = 'El usuario es requerido.'
+    }
+    if (!loginValues.password) {
+      nextErrors.password = 'La contraseña es requerida.'
+    }
+
+    if (Object.keys(nextErrors).length) {
+      setLoginErrors(nextErrors)
+      return
+    }
+
+    localStorage.setItem('driveflow-authenticated', 'true')
+    setIsAuthenticated(true)
+    setLoginValues({ username: '', password: '' })
+    setLoginErrors({})
+  }
+
+  const handleSignOut = () => {
+    localStorage.setItem('driveflow-authenticated', 'false')
+    setIsAuthenticated(false)
+    setMobileSidebarOpen(false)
+    setModalState(null)
+    setConfirmState(null)
+    setToast(null)
+  }
 
   const activeConfig = resourceConfigs[activeView]
-  const title = activeConfig?.title || (activeView === 'dashboard' ? 'Dashboard' : navItems.find((item) => item.key === activeView)?.label)
-  const subtitle = activeConfig?.description || 'A clear operating view for DriveFlow.'
+  const title = activeConfig?.title || (activeView === 'dashboard' ? 'Panel' : navItems.find((item) => item.key === activeView)?.label)
+  const subtitle = activeConfig?.description || 'Una vista operativa clara para DriveFlow.'
   const activeQuery = queries[activeView] || ''
 
   const openCreateModal = () => {
@@ -414,14 +462,14 @@ function App() {
       closeModal()
       setToast({
         type: 'success',
-        title: isEditing ? `${config.singular} updated` : `${config.singular} created`,
-        message: `${config.title} data is now up to date.`,
+        title: isEditing ? `${config.singular} actualizado` : `${config.singular} creado`,
+        message: `Los datos de ${config.title.toLowerCase()} están actualizados.`,
       })
     } catch (error) {
       setFormErrors(mapErrors(error))
       setToast({
         type: 'danger',
-        title: 'Request failed',
+        title: 'La solicitud falló',
         message: error.message,
       })
     } finally {
@@ -450,13 +498,13 @@ function App() {
       setConfirmState(null)
       setToast({
         type: 'success',
-        title: `${config.singular} updated`,
+        title: `${config.singular} actualizado`,
         message: config.deleteMessage,
       })
     } catch (error) {
       setToast({
         type: 'danger',
-        title: 'Request failed',
+        title: 'La solicitud falló',
         message: error.message,
       })
     } finally {
@@ -469,9 +517,17 @@ function App() {
     setPages((current) => ({ ...current, [key]: 1 }))
   }
 
+  if (!isAuthenticated) {
+    return (
+      <div className="app app-auth">
+        <LoginPage values={loginValues} errors={loginErrors} onChange={handleLoginChange} onSubmit={handleLoginSubmit} />
+      </div>
+    )
+  }
+
   return (
     <div className="app">
-      {mobileSidebarOpen && <button className="sidebar-scrim" type="button" onClick={() => setMobileSidebarOpen(false)} aria-label="Close navigation" />}
+      {mobileSidebarOpen && <button className="sidebar-scrim" type="button" onClick={() => setMobileSidebarOpen(false)} aria-label="Cerrar navegación" />}
       <Sidebar
         activeView={activeView}
         collapsed={sidebarCollapsed}
@@ -491,11 +547,12 @@ function App() {
           }}
           onOpenMenu={() => setMobileSidebarOpen(true)}
           onRefresh={loadData}
+          onSignOut={handleSignOut}
           health={health}
         />
         {health?.database !== 'connected' && (
           <div className="connection-banner">
-            API base: {API_BASE_URL}. Database status: {health?.database || 'unknown'}.
+            API base: {API_BASE_URL}. Estado de la base de datos: {health?.database || 'desconocido'}.
           </div>
         )}
         <div className="content">
@@ -523,7 +580,7 @@ function App() {
 
       {modalState && (
         <Modal
-          title={modalState.record ? `Edit ${resourceConfigs[modalState.resourceKey].singular}` : resourceConfigs[modalState.resourceKey].createLabel}
+          title={modalState.record ? `Editar ${resourceConfigs[modalState.resourceKey].singular}` : resourceConfigs[modalState.resourceKey].createLabel}
           onClose={closeModal}
         >
           <ResourceForm
@@ -542,9 +599,9 @@ function App() {
 
       {confirmState && (
         <ConfirmDialog
-          title={`Confirm ${resourceConfigs[confirmState.resourceKey].singular}`}
+          title={`Confirmar ${resourceConfigs[confirmState.resourceKey].singular}`}
           message={resourceConfigs[confirmState.resourceKey].deleteMessage}
-          confirmLabel="Continue"
+          confirmLabel="Continuar"
           loading={saving}
           onCancel={() => setConfirmState(null)}
           onConfirm={handleDelete}

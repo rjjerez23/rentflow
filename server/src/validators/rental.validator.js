@@ -9,26 +9,26 @@ const {
   optionalTextBody,
 } = require('./common.validator');
 
-const validateRentalId = positiveIdParam('id', 'Rental id');
+const validateRentalId = positiveIdParam('id', 'ID de alquiler');
 
 const rentalPayloadValidator = [
-  positiveIntegerBody('reservation_id', 'Reservation id'),
-  positiveIntegerBody('opened_by_user_id', 'Opened by user id'),
-  positiveIntegerBody('rental_status_id', 'Rental status id'),
-  isoDateTimeBody('start_datetime', 'Start datetime'),
-  isoDateTimeBody('expected_return_datetime', 'Expected return datetime')
+  positiveIntegerBody('reservation_id', 'ID de reserva'),
+  positiveIntegerBody('opened_by_user_id', 'ID de usuario que abrió'),
+  positiveIntegerBody('rental_status_id', 'ID de estado de alquiler'),
+  isoDateTimeBody('start_datetime', 'Fecha y hora de inicio'),
+  isoDateTimeBody('expected_return_datetime', 'Fecha y hora esperada de devolución')
     .bail()
     .custom((value, { req }) => {
       if (new Date(value) <= new Date(req.body.start_datetime)) {
-        throw new Error('Expected return datetime must be after start datetime');
+        throw new Error('La fecha y hora esperada de devolución debe ser posterior a la de inicio');
       }
 
       return true;
     }),
-  nonNegativeIntegerBody('pickup_mileage', 'Pickup mileage'),
-  positiveDecimalBody('daily_rate', 'Daily rate'),
-  nonNegativeDecimalBody('deposit_amount', 'Deposit amount'),
-  optionalTextBody('notes', 'Notes', 500),
+  nonNegativeIntegerBody('pickup_mileage', 'Kilometraje de entrega'),
+  positiveDecimalBody('daily_rate', 'Tarifa diaria'),
+  nonNegativeDecimalBody('deposit_amount', 'Monto de depósito'),
+  optionalTextBody('notes', 'Notas', 500),
   validateRequest,
 ];
 

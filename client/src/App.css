@@ -24,6 +24,82 @@
   background: var(--color-background);
 }
 
+.app-auth {
+  display: grid;
+  place-items: center;
+}
+
+.login-page {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  padding: 24px;
+}
+
+.login-card {
+  display: flex;
+  width: min(420px, 100%);
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-brand-mark {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #ffffff;
+  background: var(--color-primary);
+}
+
+.login-brand strong {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.login-panel-header {
+  display: grid;
+  gap: 6px;
+}
+
+.login-panel-header h1 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.login-panel-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+}
+
+.login-submit {
+  width: 100%;
+  min-height: 44px;
+}
+
 .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
@@ -1097,6 +1173,14 @@ textarea.field-control {
 
   .profile-chip div {
     display: none;
+  }
+
+  .login-page {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 22px;
   }
 
   .toast {

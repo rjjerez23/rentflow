@@ -26,22 +26,22 @@ const ensureForeignKeysExist = async (reservationData) => {
   const checks = [
     {
       field: 'customer_id',
-      message: 'The selected customer does not exist',
+      message: 'El cliente seleccionado no existe',
       exists: await reservationRepository.customerExists(reservationData.customer_id),
     },
     {
       field: 'vehicle_id',
-      message: 'The selected vehicle does not exist',
+      message: 'El vehículo seleccionado no existe',
       exists: await reservationRepository.vehicleExists(reservationData.vehicle_id),
     },
     {
       field: 'created_by_user_id',
-      message: 'The selected user does not exist',
+      message: 'El usuario seleccionado no existe',
       exists: await reservationRepository.userExists(reservationData.created_by_user_id),
     },
     {
       field: 'reservation_status_id',
-      message: 'The selected reservation status does not exist',
+      message: 'El estado de reserva seleccionado no existe',
       exists: await reservationRepository.statusExists(reservationData.reservation_status_id),
     },
   ];
@@ -54,7 +54,7 @@ const ensureForeignKeysExist = async (reservationData) => {
     }));
 
   if (errors.length > 0) {
-    throw createError(400, 'Invalid reservation references', errors);
+    throw createError(400, 'Referencias de reserva inválidas', errors);
   }
 };
 
@@ -66,7 +66,7 @@ const getReservationById = async (reservationId) => {
   const reservation = await reservationRepository.findById(reservationId);
 
   if (!reservation) {
-    throw createError(404, 'Reservation not found');
+    throw createError(404, 'Reserva no encontrada');
   }
 
   return reservation;
@@ -96,10 +96,10 @@ const cancelReservation = async (reservationId) => {
   const cancelledStatus = await reservationRepository.findStatusByName('cancelled');
 
   if (!cancelledStatus) {
-    throw createError(400, 'Reservation cancellation status is not configured', [
+    throw createError(400, 'El estado de cancelación de reserva no está configurado', [
       {
         field: 'reservation_status_id',
-        message: 'A reservation status named cancelled is required',
+        message: 'Se requiere un estado de reserva llamado cancelled',
       },
     ]);
   }

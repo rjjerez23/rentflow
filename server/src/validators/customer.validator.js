@@ -9,7 +9,7 @@ const validateRequest = (req, res, next) => {
 
   return res.status(400).json({
     success: false,
-    message: 'Validation failed',
+    message: 'La validación falló',
     errors: validationErrors.array().map((error) => ({
       field: error.path,
       message: error.msg,
@@ -20,7 +20,7 @@ const validateRequest = (req, res, next) => {
 const validateCustomerId = [
   param('id')
     .isInt({ min: 1 })
-    .withMessage('Customer id must be a positive integer')
+    .withMessage('El ID de cliente debe ser un entero positivo')
     .toInt(),
   validateRequest,
 ];
@@ -29,56 +29,56 @@ const customerPayloadValidator = [
   body('first_name')
     .trim()
     .notEmpty()
-    .withMessage('First name is required'),
+    .withMessage('El nombre es obligatorio'),
   body('last_name')
     .trim()
     .notEmpty()
-    .withMessage('Last name is required'),
+    .withMessage('El apellido es obligatorio'),
   body('document_number')
     .trim()
     .notEmpty()
-    .withMessage('Document number is required')
+    .withMessage('El número de documento es obligatorio')
     .isLength({ max: 50 })
-    .withMessage('Document number must not exceed 50 characters'),
+    .withMessage('El número de documento no debe exceder 50 caracteres'),
   body('driver_license_number')
     .trim()
     .notEmpty()
-    .withMessage('Driver license number is required')
+    .withMessage('El número de licencia es obligatorio')
     .isLength({ max: 50 })
-    .withMessage('Driver license number must not exceed 50 characters'),
+    .withMessage('El número de licencia no debe exceder 50 caracteres'),
   body('driver_license_expiration_date')
     .notEmpty()
-    .withMessage('Driver license expiration date is required')
+    .withMessage('La fecha de vencimiento de la licencia es obligatoria')
     .bail()
     .isISO8601({ strict: true, strictSeparator: true })
-    .withMessage('Driver license expiration date must be a valid date'),
+    .withMessage('La fecha de vencimiento de la licencia debe ser válida'),
   body('email')
     .trim()
     .notEmpty()
-    .withMessage('Email is required')
+    .withMessage('El correo es obligatorio')
     .bail()
     .isEmail()
-    .withMessage('Email must be valid')
+    .withMessage('El correo debe ser válido')
     .normalizeEmail(),
   body('phone')
     .trim()
     .notEmpty()
-    .withMessage('Phone is required')
+    .withMessage('El teléfono es obligatorio')
     .isLength({ max: 25 })
-    .withMessage('Phone must not exceed 25 characters'),
+    .withMessage('El teléfono no debe exceder 25 caracteres'),
   body('date_of_birth')
     .notEmpty()
-    .withMessage('Date of birth is required')
+    .withMessage('La fecha de nacimiento es obligatoria')
     .bail()
     .isISO8601({ strict: true, strictSeparator: true })
-    .withMessage('Date of birth must be a valid date')
+    .withMessage('La fecha de nacimiento debe ser válida')
     .bail()
     .custom((value) => {
       const dateOfBirth = new Date(`${value}T00:00:00.000Z`);
       const today = new Date();
 
       if (dateOfBirth > today) {
-        throw new Error('Date of birth cannot be in the future');
+        throw new Error('La fecha de nacimiento no puede estar en el futuro');
       }
 
       return true;
@@ -87,17 +87,17 @@ const customerPayloadValidator = [
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 255 })
-    .withMessage('Address must not exceed 255 characters'),
+    .withMessage('La dirección no debe exceder 255 caracteres'),
   body('emergency_contact_name')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 160 })
-    .withMessage('Emergency contact name must not exceed 160 characters'),
+    .withMessage('El nombre del contacto de emergencia no debe exceder 160 caracteres'),
   body('emergency_contact_phone')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 25 })
-    .withMessage('Emergency contact phone must not exceed 25 characters'),
+    .withMessage('El teléfono del contacto de emergencia no debe exceder 25 caracteres'),
   validateRequest,
 ];
 

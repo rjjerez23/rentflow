@@ -4,7 +4,7 @@ const parseResponse = async (response) => {
   const data = await response.json().catch(() => ({}))
 
   if (!response.ok) {
-    const error = new Error(data.message || 'Request failed')
+    const error = new Error(data.message || 'La solicitud falló')
     error.status = response.status
     error.errors = data.errors || []
     throw error

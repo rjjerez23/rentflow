@@ -9,7 +9,7 @@ const validateRequest = (req, res, next) => {
 
   return res.status(400).json({
     success: false,
-    message: 'Validation failed',
+    message: 'La validación falló',
     errors: validationErrors.array().map((error) => ({
       field: error.path,
       message: error.msg,
@@ -20,61 +20,61 @@ const validateRequest = (req, res, next) => {
 const validateVehicleId = [
   param('id')
     .isInt({ min: 1 })
-    .withMessage('Vehicle id must be a positive integer')
+    .withMessage('El ID de vehículo debe ser un entero positivo')
     .toInt(),
   validateRequest,
 ];
 
 const positiveIntegerField = (field, label) => body(field)
   .isInt({ min: 1 })
-  .withMessage(`${label} must be a positive integer`)
+  .withMessage(`${label} debe ser un entero positivo`)
   .toInt();
 
 const vehiclePayloadValidator = [
-  positiveIntegerField('model_id', 'Model id'),
-  positiveIntegerField('category_id', 'Category id'),
-  positiveIntegerField('fuel_type_id', 'Fuel type id'),
-  positiveIntegerField('transmission_id', 'Transmission id'),
-  positiveIntegerField('vehicle_status_id', 'Vehicle status id'),
+  positiveIntegerField('model_id', 'ID de modelo'),
+  positiveIntegerField('category_id', 'ID de categoría'),
+  positiveIntegerField('fuel_type_id', 'ID de combustible'),
+  positiveIntegerField('transmission_id', 'ID de transmisión'),
+  positiveIntegerField('vehicle_status_id', 'ID de estado del vehículo'),
   body('plate_number')
     .trim()
     .notEmpty()
-    .withMessage('Plate number is required')
+    .withMessage('La placa es obligatoria')
     .isLength({ max: 20 })
-    .withMessage('Plate number must not exceed 20 characters'),
+    .withMessage('La placa no debe exceder 20 caracteres'),
   body('vin')
     .trim()
     .notEmpty()
-    .withMessage('VIN is required')
+    .withMessage('El VIN es obligatorio')
     .isLength({ max: 50 })
-    .withMessage('VIN must not exceed 50 characters'),
+    .withMessage('El VIN no debe exceder 50 caracteres'),
   body('color')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 50 })
-    .withMessage('Color must not exceed 50 characters'),
+    .withMessage('El color no debe exceder 50 caracteres'),
   body('model_year')
     .isInt({ min: 1900 })
-    .withMessage('Model year must be 1900 or greater')
+    .withMessage('El año del modelo debe ser 1900 o mayor')
     .toInt(),
   body('engine')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 100 })
-    .withMessage('Engine must not exceed 100 characters'),
-  positiveIntegerField('passenger_capacity', 'Passenger capacity'),
-  positiveIntegerField('door_count', 'Door count'),
+    .withMessage('El motor no debe exceder 100 caracteres'),
+  positiveIntegerField('passenger_capacity', 'Capacidad de pasajeros'),
+  positiveIntegerField('door_count', 'Cantidad de puertas'),
   body('air_conditioning')
     .isBoolean()
-    .withMessage('Air conditioning must be a boolean value')
+    .withMessage('El aire acondicionado debe ser un valor booleano')
     .toBoolean(),
   body('mileage')
     .isInt({ min: 0 })
-    .withMessage('Mileage must be greater than or equal to 0')
+    .withMessage('El kilometraje debe ser mayor o igual a 0')
     .toInt(),
   body('daily_rate')
     .isFloat({ gt: 0 })
-    .withMessage('Daily rate must be greater than 0')
+    .withMessage('La tarifa diaria debe ser mayor que 0')
     .toFloat(),
   validateRequest,
 ];

@@ -30,12 +30,12 @@ const ensureForeignKeysExist = async (returnData) => {
   const checks = [
     {
       field: 'rental_id',
-      message: 'The selected rental does not exist',
+      message: 'El alquiler seleccionado no existe',
       exists: await returnRepository.rentalExists(returnData.rental_id),
     },
     {
       field: 'processed_by_user_id',
-      message: 'The selected user does not exist',
+      message: 'El usuario seleccionado no existe',
       exists: await returnRepository.userExists(returnData.processed_by_user_id),
     },
   ];
@@ -48,7 +48,7 @@ const ensureForeignKeysExist = async (returnData) => {
     }));
 
   if (errors.length > 0) {
-    throw createError(400, 'Invalid return references', errors);
+    throw createError(400, 'Referencias de devolución inválidas', errors);
   }
 };
 
@@ -58,10 +58,10 @@ const ensureRentalIsUnique = async (rentalId, returnId = null) => {
     : await returnRepository.findByRentalId(rentalId);
 
   if (existingReturn) {
-    throw createError(409, 'Rental already has a return', [
+    throw createError(409, 'El alquiler ya tiene una devolución', [
       {
         field: 'rental_id',
-        message: 'Rental must be unique for returns',
+        message: 'El alquiler debe ser único para las devoluciones',
       },
     ]);
   }
@@ -75,7 +75,7 @@ const getReturnById = async (returnId) => {
   const returnRecord = await returnRepository.findById(returnId);
 
   if (!returnRecord) {
-    throw createError(404, 'Return not found');
+    throw createError(404, 'Devolución no encontrada');
   }
 
   return returnRecord;

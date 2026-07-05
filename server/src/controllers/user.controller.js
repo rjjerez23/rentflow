@@ -6,7 +6,7 @@ const getAllUsers = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Users retrieved successfully',
+      message: 'Usuarios obtenidos correctamente',
       data: users,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getUserById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'User retrieved successfully',
+      message: 'Usuario obtenido correctamente',
       data: user,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createUser = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'User created successfully',
+      message: 'Usuario creado correctamente',
       data: user,
     });
   } catch (error) {
@@ -48,7 +48,7 @@ const updateUser = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'User updated successfully',
+      message: 'Usuario actualizado correctamente',
       data: user,
     });
   } catch (error) {
@@ -62,7 +62,7 @@ const deleteUser = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'User deactivated successfully',
+      message: 'Usuario desactivado correctamente',
       data: user,
     });
   } catch (error) {

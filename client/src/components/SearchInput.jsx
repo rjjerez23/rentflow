@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react'
 
-function SearchInput({ value, onChange, placeholder = 'Search' }) {
+function SearchInput({ value, onChange, placeholder = 'Buscar' }) {
   return (
     <label className="search-input">
       <Search size={16} aria-hidden="true" />

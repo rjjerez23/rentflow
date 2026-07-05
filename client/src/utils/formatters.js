@@ -1,7 +1,7 @@
 export const formatCurrency = (value) => {
   const amount = Number(value || 0)
 
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('es-DO', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 2,
@@ -13,7 +13,7 @@ export const formatDate = (value) => {
     return '—'
   }
 
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('es-DO', {
     month: 'short',
     day: '2-digit',
     year: 'numeric',
@@ -25,7 +25,7 @@ export const formatDateTime = (value) => {
     return '—'
   }
 
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('es-DO', {
     month: 'short',
     day: '2-digit',
     year: 'numeric',
@@ -59,6 +59,6 @@ export const toDateTimeInputValue = (value) => {
   return localDate.toISOString().slice(0, 16)
 }
 
-export const formatBoolean = (value) => (value ? 'Yes' : 'No')
+export const formatBoolean = (value) => (value ? 'Sí' : 'No')
 
 export const fullName = (record) => [record.first_name, record.last_name].filter(Boolean).join(' ')

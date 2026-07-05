@@ -6,7 +6,7 @@ const getAllReservations = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Reservations retrieved successfully',
+      message: 'Reservas obtenidas correctamente',
       data: reservations,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getReservationById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Reservation retrieved successfully',
+      message: 'Reserva obtenida correctamente',
       data: reservation,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createReservation = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Reservation created successfully',
+      message: 'Reserva creada correctamente',
       data: reservation,
     });
   } catch (error) {
@@ -51,7 +51,7 @@ const updateReservation = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Reservation updated successfully',
+      message: 'Reserva actualizada correctamente',
       data: reservation,
     });
   } catch (error) {
@@ -65,7 +65,7 @@ const deleteReservation = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Reservation cancelled successfully',
+      message: 'Reserva cancelada correctamente',
       data: reservation,
     });
   } catch (error) {

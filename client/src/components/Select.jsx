@@ -1,4 +1,4 @@
-function Select({ label, error, options = [], placeholder = 'Select an option', className = '', ...props }) {
+function Select({ label, error, options = [], placeholder = 'Selecciona una opción', className = '', ...props }) {
   return (
     <label className={`field ${className}`}>
       <span>{label}</span>

@@ -9,7 +9,7 @@ const validateRequest = (req, res, next) => {
 
   return res.status(400).json({
     success: false,
-    message: 'Validation failed',
+    message: 'La validación falló',
     errors: validationErrors.array().map((error) => ({
       field: error.path,
       message: error.msg,
@@ -20,43 +20,43 @@ const validateRequest = (req, res, next) => {
 const positiveIdParam = (name, label) => [
   param(name)
     .isInt({ min: 1 })
-    .withMessage(`${label} must be a positive integer`)
+    .withMessage(`${label} debe ser un entero positivo`)
     .toInt(),
   validateRequest,
 ];
 
 const positiveIntegerBody = (field, label) => body(field)
   .isInt({ min: 1 })
-  .withMessage(`${label} must be a positive integer`)
+  .withMessage(`${label} debe ser un entero positivo`)
   .toInt();
 
 const nonNegativeIntegerBody = (field, label) => body(field)
   .isInt({ min: 0 })
-  .withMessage(`${label} must be greater than or equal to 0`)
+  .withMessage(`${label} debe ser mayor o igual a 0`)
   .toInt();
 
 const nonNegativeDecimalBody = (field, label) => body(field)
   .isFloat({ min: 0 })
-  .withMessage(`${label} must be greater than or equal to 0`)
+  .withMessage(`${label} debe ser mayor o igual a 0`)
   .toFloat();
 
 const positiveDecimalBody = (field, label) => body(field)
   .isFloat({ gt: 0 })
-  .withMessage(`${label} must be greater than 0`)
+  .withMessage(`${label} debe ser mayor que 0`)
   .toFloat();
 
 const isoDateTimeBody = (field, label) => body(field)
   .notEmpty()
-  .withMessage(`${label} is required`)
+  .withMessage(`${label} es obligatorio`)
   .bail()
   .isISO8601()
-  .withMessage(`${label} must be a valid date or datetime`);
+  .withMessage(`${label} debe ser una fecha u hora válida`);
 
 const optionalTextBody = (field, label, maxLength) => body(field)
   .optional({ nullable: true, checkFalsy: true })
   .trim()
   .isLength({ max: maxLength })
-  .withMessage(`${label} must not exceed ${maxLength} characters`);
+  .withMessage(`${label} no debe exceder ${maxLength} caracteres`);
 
 module.exports = {
   validateRequest,

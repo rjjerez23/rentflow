@@ -41,10 +41,10 @@ const ensurePlateNumberIsUnique = async (plateNumber, vehicleId = null) => {
     : await vehicleRepository.findByPlateNumber(plateNumber);
 
   if (existingVehicle) {
-    throw createError(409, 'Plate number is already registered', [
+    throw createError(409, 'La placa ya está registrada', [
       {
         field: 'plate_number',
-        message: 'Plate number must be unique',
+        message: 'La placa debe ser única',
       },
     ]);
   }
@@ -56,10 +56,10 @@ const ensureVinIsUnique = async (vin, vehicleId = null) => {
     : await vehicleRepository.findByVin(vin);
 
   if (existingVehicle) {
-    throw createError(409, 'VIN is already registered', [
+    throw createError(409, 'El VIN ya está registrado', [
       {
         field: 'vin',
-        message: 'VIN must be unique',
+        message: 'El VIN debe ser único',
       },
     ]);
   }
@@ -69,27 +69,27 @@ const ensureForeignKeysExist = async (vehicleData) => {
   const checks = [
     {
       field: 'model_id',
-      message: 'The selected vehicle model does not exist',
+      message: 'El modelo de vehículo seleccionado no existe',
       exists: await vehicleRepository.modelExists(vehicleData.model_id),
     },
     {
       field: 'category_id',
-      message: 'The selected category does not exist',
+      message: 'La categoría seleccionada no existe',
       exists: await vehicleRepository.categoryExists(vehicleData.category_id),
     },
     {
       field: 'fuel_type_id',
-      message: 'The selected fuel type does not exist',
+      message: 'El tipo de combustible seleccionado no existe',
       exists: await vehicleRepository.fuelTypeExists(vehicleData.fuel_type_id),
     },
     {
       field: 'transmission_id',
-      message: 'The selected transmission does not exist',
+      message: 'La transmisión seleccionada no existe',
       exists: await vehicleRepository.transmissionExists(vehicleData.transmission_id),
     },
     {
       field: 'vehicle_status_id',
-      message: 'The selected vehicle status does not exist',
+      message: 'El estado de vehículo seleccionado no existe',
       exists: await vehicleRepository.vehicleStatusExists(vehicleData.vehicle_status_id),
     },
   ];
@@ -102,7 +102,7 @@ const ensureForeignKeysExist = async (vehicleData) => {
     }));
 
   if (errors.length > 0) {
-    throw createError(400, 'Invalid vehicle references', errors);
+    throw createError(400, 'Referencias de vehículo inválidas', errors);
   }
 };
 
@@ -119,7 +119,7 @@ const getVehicleById = async (vehicleId) => {
   const vehicle = await vehicleRepository.findById(vehicleId);
 
   if (!vehicle) {
-    throw createError(404, 'Vehicle not found');
+    throw createError(404, 'Vehículo no encontrado');
   }
 
   return vehicle;

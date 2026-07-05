@@ -122,10 +122,10 @@ function ResourceForm({
       {errors.form && <p className="form-error">{errors.form}</p>}
       <footer className="modal-actions">
         <Button variant="secondary" onClick={onCancel} disabled={saving}>
-          Cancel
+          Cancelar
         </Button>
         <Button type="submit" disabled={saving}>
-          {saving ? 'Saving...' : isEditing ? 'Save Changes' : `Create ${config.singular}`}
+          {saving ? 'Guardando...' : isEditing ? 'Guardar cambios' : `Crear ${config.singular.toLowerCase()}`}
         </Button>
       </footer>
     </form>

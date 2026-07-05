@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: 'DriveFlow API running',
+    message: 'API de DriveFlow en ejecución',
     database: connected ? 'connected' : 'disconnected',
   });
 });

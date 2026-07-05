@@ -43,7 +43,7 @@ const testConnection = async () => {
   const { connected, error } = await verifyConnection();
 
   if (connected) {
-    console.log('MariaDB connection established successfully.');
+    console.log('Conexión con MariaDB establecida correctamente.');
     return true;
   }
 

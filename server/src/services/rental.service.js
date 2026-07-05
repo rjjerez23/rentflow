@@ -27,17 +27,17 @@ const ensureForeignKeysExist = async (rentalData) => {
   const checks = [
     {
       field: 'reservation_id',
-      message: 'The selected reservation does not exist',
+      message: 'La reserva seleccionada no existe',
       exists: await rentalRepository.reservationExists(rentalData.reservation_id),
     },
     {
       field: 'opened_by_user_id',
-      message: 'The selected user does not exist',
+      message: 'El usuario seleccionado no existe',
       exists: await rentalRepository.userExists(rentalData.opened_by_user_id),
     },
     {
       field: 'rental_status_id',
-      message: 'The selected rental status does not exist',
+      message: 'El estado de alquiler seleccionado no existe',
       exists: await rentalRepository.statusExists(rentalData.rental_status_id),
     },
   ];
@@ -50,7 +50,7 @@ const ensureForeignKeysExist = async (rentalData) => {
     }));
 
   if (errors.length > 0) {
-    throw createError(400, 'Invalid rental references', errors);
+    throw createError(400, 'Referencias de alquiler inválidas', errors);
   }
 };
 
@@ -60,10 +60,10 @@ const ensureReservationIsUnique = async (reservationId, rentalId = null) => {
     : await rentalRepository.findByReservationId(reservationId);
 
   if (existingRental) {
-    throw createError(409, 'Reservation already has a rental', [
+    throw createError(409, 'La reserva ya tiene un alquiler', [
       {
         field: 'reservation_id',
-        message: 'Reservation must be unique for rentals',
+        message: 'La reserva debe ser única para los alquileres',
       },
     ]);
   }
@@ -77,7 +77,7 @@ const getRentalById = async (rentalId) => {
   const rental = await rentalRepository.findById(rentalId);
 
   if (!rental) {
-    throw createError(404, 'Rental not found');
+    throw createError(404, 'Alquiler no encontrado');
   }
 
   return rental;
@@ -109,10 +109,10 @@ const cancelRental = async (rentalId) => {
   const cancelledStatus = await rentalRepository.findStatusByName('cancelled');
 
   if (!cancelledStatus) {
-    throw createError(400, 'Rental cancellation status is not configured', [
+    throw createError(400, 'El estado de cancelación de alquiler no está configurado', [
       {
         field: 'rental_status_id',
-        message: 'A rental status named cancelled is required',
+        message: 'Se requiere un estado de alquiler llamado cancelled',
       },
     ]);
   }

@@ -6,7 +6,7 @@ const getAllCustomers = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Customers retrieved successfully',
+      message: 'Clientes obtenidos correctamente',
       data: customers,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getCustomerById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Customer retrieved successfully',
+      message: 'Cliente obtenido correctamente',
       data: customer,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createCustomer = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Customer created successfully',
+      message: 'Cliente creado correctamente',
       data: customer,
     });
   } catch (error) {
@@ -48,7 +48,7 @@ const updateCustomer = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Customer updated successfully',
+      message: 'Cliente actualizado correctamente',
       data: customer,
     });
   } catch (error) {
@@ -62,7 +62,7 @@ const deleteCustomer = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Customer deactivated successfully',
+      message: 'Cliente desactivado correctamente',
       data: customer,
     });
   } catch (error) {

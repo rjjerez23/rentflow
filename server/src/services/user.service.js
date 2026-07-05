@@ -14,10 +14,10 @@ const ensureRoleExists = async (roleId) => {
   const exists = await userRepository.roleExists(roleId);
 
   if (!exists) {
-    throw createError(400, 'Role does not exist', [
+    throw createError(400, 'El rol no existe', [
       {
         field: 'role_id',
-        message: 'The selected role does not exist',
+        message: 'El rol seleccionado no existe',
       },
     ]);
   }
@@ -29,10 +29,10 @@ const ensureEmailIsUnique = async (email, userId = null) => {
     : await userRepository.findByEmail(email);
 
   if (existingUser) {
-    throw createError(409, 'Email is already registered', [
+    throw createError(409, 'El correo ya está registrado', [
       {
         field: 'email',
-        message: 'Email must be unique',
+        message: 'El correo debe ser único',
       },
     ]);
   }
@@ -46,7 +46,7 @@ const getUserById = async (userId) => {
   const user = await userRepository.findById(userId);
 
   if (!user) {
-    throw createError(404, 'User not found');
+    throw createError(404, 'Usuario no encontrado');
   }
 
   return user;

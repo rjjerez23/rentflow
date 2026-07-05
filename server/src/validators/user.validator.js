@@ -9,7 +9,7 @@ const validateRequest = (req, res, next) => {
 
   return res.status(400).json({
     success: false,
-    message: 'Validation failed',
+    message: 'La validación falló',
     errors: validationErrors.array().map((error) => ({
       field: error.path,
       message: error.msg,
@@ -20,7 +20,7 @@ const validateRequest = (req, res, next) => {
 const validateUserId = [
   param('id')
     .isInt({ min: 1 })
-    .withMessage('User id must be a positive integer')
+    .withMessage('El ID de usuario debe ser un entero positivo')
     .toInt(),
   validateRequest,
 ];
@@ -29,31 +29,31 @@ const createUserValidator = [
   body('first_name')
     .trim()
     .notEmpty()
-    .withMessage('First name is required'),
+    .withMessage('El nombre es obligatorio'),
   body('last_name')
     .trim()
     .notEmpty()
-    .withMessage('Last name is required'),
+    .withMessage('El apellido es obligatorio'),
   body('email')
     .trim()
     .notEmpty()
-    .withMessage('Email is required')
+    .withMessage('El correo es obligatorio')
     .bail()
     .isEmail()
-    .withMessage('Email must be valid')
+    .withMessage('El correo debe ser válido')
     .normalizeEmail(),
   body('role_id')
     .isInt({ min: 1 })
-    .withMessage('Role id must be a positive integer')
+    .withMessage('El ID de rol debe ser un entero positivo')
     .toInt(),
   body('password')
     .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters long'),
+    .withMessage('La contraseña debe tener al menos 8 caracteres'),
   body('phone')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 25 })
-    .withMessage('Phone must not exceed 25 characters'),
+    .withMessage('El teléfono no debe exceder 25 caracteres'),
   validateRequest,
 ];
 
@@ -61,32 +61,32 @@ const updateUserValidator = [
   body('first_name')
     .trim()
     .notEmpty()
-    .withMessage('First name is required'),
+    .withMessage('El nombre es obligatorio'),
   body('last_name')
     .trim()
     .notEmpty()
-    .withMessage('Last name is required'),
+    .withMessage('El apellido es obligatorio'),
   body('email')
     .trim()
     .notEmpty()
-    .withMessage('Email is required')
+    .withMessage('El correo es obligatorio')
     .bail()
     .isEmail()
-    .withMessage('Email must be valid')
+    .withMessage('El correo debe ser válido')
     .normalizeEmail(),
   body('role_id')
     .isInt({ min: 1 })
-    .withMessage('Role id must be a positive integer')
+    .withMessage('El ID de rol debe ser un entero positivo')
     .toInt(),
   body('password')
     .optional({ nullable: true, checkFalsy: true })
     .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters long'),
+    .withMessage('La contraseña debe tener al menos 8 caracteres'),
   body('phone')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ max: 25 })
-    .withMessage('Phone must not exceed 25 characters'),
+    .withMessage('El teléfono no debe exceder 25 caracteres'),
   validateRequest,
 ];
 

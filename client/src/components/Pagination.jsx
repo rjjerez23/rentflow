@@ -15,10 +15,10 @@ function Pagination({ page, pageCount, onPageChange }) {
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
       >
-        Prev
+        Anterior
       </Button>
       <span>
-        Page {page} of {pageCount}
+        Página {page} de {pageCount}
       </span>
       <Button
         variant="secondary"
@@ -27,7 +27,7 @@ function Pagination({ page, pageCount, onPageChange }) {
         onClick={() => onPageChange(page + 1)}
         disabled={page === pageCount}
       >
-        Next
+        Siguiente
       </Button>
     </div>
   )

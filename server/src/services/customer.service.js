@@ -23,10 +23,10 @@ const ensureEmailIsUnique = async (email, customerId = null) => {
     : await customerRepository.findByEmail(email);
 
   if (existingCustomer) {
-    throw createError(409, 'Email is already registered', [
+    throw createError(409, 'El correo ya está registrado', [
       {
         field: 'email',
-        message: 'Email must be unique',
+        message: 'El correo debe ser único',
       },
     ]);
   }
@@ -38,10 +38,10 @@ const ensureDocumentNumberIsUnique = async (documentNumber, customerId = null) =
     : await customerRepository.findByDocumentNumber(documentNumber);
 
   if (existingCustomer) {
-    throw createError(409, 'Document number is already registered', [
+    throw createError(409, 'El número de documento ya está registrado', [
       {
         field: 'document_number',
-        message: 'Document number must be unique',
+        message: 'El número de documento debe ser único',
       },
     ]);
   }
@@ -56,10 +56,10 @@ const ensureDriverLicenseNumberIsUnique = async (driverLicenseNumber, customerId
     : await customerRepository.findByDriverLicenseNumber(driverLicenseNumber);
 
   if (existingCustomer) {
-    throw createError(409, 'Driver license number is already registered', [
+    throw createError(409, 'El número de licencia ya está registrado', [
       {
         field: 'driver_license_number',
-        message: 'Driver license number must be unique',
+        message: 'El número de licencia debe ser único',
       },
     ]);
   }
@@ -93,7 +93,7 @@ const getCustomerById = async (customerId) => {
   const customer = await customerRepository.findById(customerId);
 
   if (!customer) {
-    throw createError(404, 'Customer not found');
+    throw createError(404, 'Cliente no encontrado');
   }
 
   return customer;

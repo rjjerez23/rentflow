@@ -2,7 +2,7 @@ import { AlertTriangle } from 'lucide-react'
 import Button from './Button'
 import Modal from './Modal'
 
-function ConfirmDialog({ title, message, confirmLabel = 'Confirm', onCancel, onConfirm, loading }) {
+function ConfirmDialog({ title, message, confirmLabel = 'Confirmar', onCancel, onConfirm, loading }) {
   return (
     <Modal title={title} onClose={onCancel}>
       <div className="confirm-body">
@@ -13,10 +13,10 @@ function ConfirmDialog({ title, message, confirmLabel = 'Confirm', onCancel, onC
       </div>
       <footer className="modal-actions">
         <Button variant="secondary" onClick={onCancel} disabled={loading}>
-          Cancel
+          Cancelar
         </Button>
         <Button variant="danger" onClick={onConfirm} disabled={loading}>
-          {loading ? 'Working...' : confirmLabel}
+          {loading ? 'Procesando...' : confirmLabel}
         </Button>
       </footer>
     </Modal>

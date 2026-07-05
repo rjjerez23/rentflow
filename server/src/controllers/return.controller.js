@@ -6,7 +6,7 @@ const getAllReturns = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Returns retrieved successfully',
+      message: 'Devoluciones obtenidas correctamente',
       data: returns,
     });
   } catch (error) {
@@ -20,7 +20,7 @@ const getReturnById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Return retrieved successfully',
+      message: 'Devolución obtenida correctamente',
       data: returnRecord,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ const createReturn = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Return created successfully',
+      message: 'Devolución creada correctamente',
       data: returnRecord,
     });
   } catch (error) {
@@ -48,7 +48,7 @@ const updateReturn = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Return updated successfully',
+      message: 'Devolución actualizada correctamente',
       data: returnRecord,
     });
   } catch (error) {
@@ -62,7 +62,7 @@ const deleteReturn = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Return deleted successfully',
+      message: 'Devolución eliminada correctamente',
       data: null,
     });
   } catch (error) {
