@@ -48,8 +48,8 @@ const testConnection = async () => {
   }
 
   if (error) {
-    console.error('MariaDB connection failed. The API will continue running.');
-    console.error(`Database error: ${error.message}`);
+    console.error('No se pudo conectar con MariaDB. La API continuara en ejecucion.');
+    console.error(`Error de base de datos: ${error.message}`);
   }
 
   return false;

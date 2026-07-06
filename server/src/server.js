@@ -9,11 +9,11 @@ const startServer = async () => {
   await testConnection();
 
   app.listen(PORT, () => {
-    console.log(`API de DriveFlow en ejecución on port ${PORT}`);
+    console.log(`API de DriveFlow en ejecucion en el puerto ${PORT}`);
   });
 };
 
 startServer().catch((error) => {
-  console.error('Unable to start DriveFlow API.');
+  console.error('No se pudo iniciar la API de DriveFlow.');
   console.error(error.message);
 });

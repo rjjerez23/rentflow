@@ -1,14 +1,9 @@
--- DriveFlow database schema
--- Compatible with MariaDB.
--- This script creates the database and all required tables without inserting test data.
-
 CREATE DATABASE IF NOT EXISTS driveflow_db
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE driveflow_db;
 
--- System roles used to authorize application users.
 CREATE TABLE IF NOT EXISTS roles (
   role_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -18,7 +13,6 @@ CREATE TABLE IF NOT EXISTS roles (
   CONSTRAINT uq_roles_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Application role catalog.';
 
--- Application users. Customer records are stored separately in customers.
 CREATE TABLE IF NOT EXISTS users (
   user_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   role_id INT UNSIGNED NOT NULL,
@@ -41,7 +35,6 @@ CREATE TABLE IF NOT EXISTS users (
   CONSTRAINT chk_users_is_active CHECK (is_active IN (0, 1))
 ) ENGINE=InnoDB COMMENT='Internal users who operate the system.';
 
--- Customers who rent vehicles.
 CREATE TABLE IF NOT EXISTS customers (
   customer_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(80) NOT NULL,
@@ -66,7 +59,6 @@ CREATE TABLE IF NOT EXISTS customers (
   CONSTRAINT chk_customers_is_active CHECK (is_active IN (0, 1))
 ) ENGINE=InnoDB COMMENT='Customer master data.';
 
--- Vehicle manufacturer catalog.
 CREATE TABLE IF NOT EXISTS brands (
   brand_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(80) NOT NULL,
@@ -75,7 +67,6 @@ CREATE TABLE IF NOT EXISTS brands (
   CONSTRAINT uq_brands_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Vehicle brand catalog.';
 
--- Vehicle model catalog. Each model belongs to exactly one brand.
 CREATE TABLE IF NOT EXISTS vehicle_models (
   model_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   brand_id INT UNSIGNED NOT NULL,
@@ -89,7 +80,6 @@ CREATE TABLE IF NOT EXISTS vehicle_models (
     ON DELETE RESTRICT
 ) ENGINE=InnoDB COMMENT='Vehicle model catalog normalized by brand.';
 
--- Vehicle category catalog, such as compact, SUV, pickup, or luxury.
 CREATE TABLE IF NOT EXISTS categories (
   category_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(80) NOT NULL,
@@ -101,7 +91,6 @@ CREATE TABLE IF NOT EXISTS categories (
   CONSTRAINT chk_categories_default_daily_rate CHECK (default_daily_rate >= 0)
 ) ENGINE=InnoDB COMMENT='Vehicle category catalog.';
 
--- Fuel type catalog.
 CREATE TABLE IF NOT EXISTS fuel_types (
   fuel_type_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -110,7 +99,6 @@ CREATE TABLE IF NOT EXISTS fuel_types (
   CONSTRAINT uq_fuel_types_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Fuel type catalog.';
 
--- Transmission catalog. Expected values include Automatic and Manual.
 CREATE TABLE IF NOT EXISTS transmissions (
   transmission_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -120,7 +108,6 @@ CREATE TABLE IF NOT EXISTS transmissions (
   CONSTRAINT uq_transmissions_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Vehicle transmission catalog.';
 
--- Vehicle availability and operational status catalog.
 CREATE TABLE IF NOT EXISTS vehicle_status (
   vehicle_status_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -130,7 +117,6 @@ CREATE TABLE IF NOT EXISTS vehicle_status (
   CONSTRAINT uq_vehicle_status_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Vehicle status catalog.';
 
--- Reservation status catalog.
 CREATE TABLE IF NOT EXISTS reservation_status (
   reservation_status_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -140,7 +126,6 @@ CREATE TABLE IF NOT EXISTS reservation_status (
   CONSTRAINT uq_reservation_status_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Reservation workflow status catalog.';
 
--- Rental status catalog.
 CREATE TABLE IF NOT EXISTS rental_status (
   rental_status_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -150,7 +135,6 @@ CREATE TABLE IF NOT EXISTS rental_status (
   CONSTRAINT uq_rental_status_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Rental workflow status catalog.';
 
--- Maintenance status catalog.
 CREATE TABLE IF NOT EXISTS maintenance_status (
   maintenance_status_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -160,7 +144,6 @@ CREATE TABLE IF NOT EXISTS maintenance_status (
   CONSTRAINT uq_maintenance_status_name UNIQUE (name)
 ) ENGINE=InnoDB COMMENT='Maintenance workflow status catalog.';
 
--- Vehicle inventory.
 CREATE TABLE IF NOT EXISTS vehicles (
   vehicle_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   model_id INT UNSIGNED NOT NULL,
@@ -216,7 +199,6 @@ CREATE TABLE IF NOT EXISTS vehicles (
   CONSTRAINT chk_vehicles_is_active CHECK (is_active IN (0, 1))
 ) ENGINE=InnoDB COMMENT='Vehicle inventory available for reservations and rentals.';
 
--- Vehicle image gallery. A vehicle can have multiple images.
 CREATE TABLE IF NOT EXISTS vehicle_images (
   image_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   vehicle_id BIGINT UNSIGNED NOT NULL,
@@ -232,7 +214,6 @@ CREATE TABLE IF NOT EXISTS vehicle_images (
   CONSTRAINT chk_vehicle_images_is_primary CHECK (is_primary IN (0, 1))
 ) ENGINE=InnoDB COMMENT='Vehicle images associated with inventory records.';
 
--- Vehicle maintenance history. This does not replace the operational vehicle status catalog.
 CREATE TABLE IF NOT EXISTS maintenance (
   maintenance_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   vehicle_id BIGINT UNSIGNED NOT NULL,
@@ -256,7 +237,6 @@ CREATE TABLE IF NOT EXISTS maintenance (
   CONSTRAINT chk_maintenance_cost CHECK (cost >= 0)
 ) ENGINE=InnoDB COMMENT='Vehicle maintenance history.';
 
--- Reservation records. A reservation links one customer with one vehicle for a date range.
 CREATE TABLE IF NOT EXISTS reservations (
   reservation_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   customer_id BIGINT UNSIGNED NOT NULL,
@@ -294,7 +274,6 @@ CREATE TABLE IF NOT EXISTS reservations (
   CONSTRAINT chk_reservations_estimated_total CHECK (estimated_total >= 0)
 ) ENGINE=InnoDB COMMENT='Vehicle reservations before the rental contract is opened.';
 
--- Rental contracts generated from reservations.
 CREATE TABLE IF NOT EXISTS rentals (
   rental_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   reservation_id BIGINT UNSIGNED NOT NULL,
@@ -329,7 +308,6 @@ CREATE TABLE IF NOT EXISTS rentals (
   CONSTRAINT chk_rentals_deposit_amount CHECK (deposit_amount >= 0)
 ) ENGINE=InnoDB COMMENT='Rental contract data created from a reservation.';
 
--- Vehicle return records. One rental can have only one return.
 CREATE TABLE IF NOT EXISTS `returns` (
   return_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   rental_id BIGINT UNSIGNED NOT NULL,

@@ -7,8 +7,8 @@ DriveFlow es un sistema web para la gestion de rentas de vehiculos. El proyecto 
 - Frontend: React, Vite y JavaScript.
 - Backend: Node.js y Express.
 - Base de datos: MariaDB.
-- Autenticacion: JWT, pendiente de implementacion.
-- Dependencias backend iniciales: cors, dotenv, mariadb, bcrypt, jsonwebtoken y express-validator.
+- Autenticacion: pendiente de implementacion.
+- Dependencias backend: cors, dotenv, mariadb, bcrypt y express-validator.
 
 ## Estructura del proyecto
 
@@ -64,4 +64,4 @@ La API iniciara por defecto en `http://localhost:3000`.
 
 ## Estado actual
 
-Esta version solo contiene la estructura inicial del proyecto. No incluye logica de negocio, rutas, modelos, controladores ni scripts de base de datos.
+El proyecto incluye una API REST con rutas, controladores, servicios, repositorios y validadores para la gestion principal de DriveFlow. La autenticacion formal todavia esta pendiente.
